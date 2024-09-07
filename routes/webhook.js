@@ -1,6 +1,7 @@
 async function webhookRoutes(fastify, options) {
   fastify.post('/webhook', async (request, reply) => {
     const webhookData = request.body;
+    console.log("webhookData:   ",webhookData);
 
     try {
       fastify.log.info('Webhook received:', webhookData);

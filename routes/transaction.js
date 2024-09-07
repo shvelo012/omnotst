@@ -1,139 +1,115 @@
-const axios = require('axios');
 const { getAuthToken } = require('../auth');
 
 async function transactionRoutes(fastify, options) {
-  fastify.post('/create-transaction',
-    //   {
-    //   schema: {
-    //     body: {
-    //       type: 'object',
-    //       required: ['amount', 'currency', 'billing', 'cardData', 'orderId', 'hookUrl', 'cardToken'],
-    //       properties: {
-    //         amount: { type: 'number' },
-    //         currency: { type: 'string' },
-    //         lang: { type: 'string' },
-    //         hookUrl: { type: 'string' },
-    //         callback: { type: 'string' },
-    //         callbackFail: { type: 'string' },
-    //         billing: {
-    //           type: 'object',
-    //           required: ['firstName', 'lastName', 'address1', 'city', 'state', 'country', 'postalCode', 'phone', 'email', 'externalUserId', 'dateOfBirth'],
-    //           properties: {
-    //             firstName: { type: 'string' },
-    //             lastName: { type: 'string' },
-    //             address1: { type: 'string' },
-    //             city: { type: 'string' },
-    //             state: { type: 'string' },
-    //             country: { type: 'string' },
-    //             postalCode: { type: 'string' },
-    //             phone: { type: 'string' },
-    //             email: { type: 'string' },
-    //             externalUserId: { type: 'string' },
-    //             dateOfBirth: { type: 'string' }
-    //           }
-    //         },
-    //         cardData: {
-    //           type: 'object',
-    //           required: ['cardNumber', 'cardHolderName', 'cardExpiryDate', 'cardExpiryDate2', 'cardCvv', 'browser'],
-    //           properties: {
-    //             cardNumber: { type: 'string' },
-    //             cardHolderName: { type: 'string' },
-    //             cardExpiryDate: { type: 'string' },
-    //             cardExpiryDate2: { type: 'string' },
-    //             cardCvv: { type: 'string' },
-    //             browser: {
-    //               type: 'object',
-    //               required: ['colorDepth', 'userAgent', 'language', 'timeZone', 'screenWidth', 'javaEnabled', 'customerIp', 'screenHeight', 'windowHeight', 'timeZoneOffset', 'windowWidth'],
-    //               properties: {
-    //                 colorDepth: { type: 'number' },
-    //                 userAgent: { type: 'string' },
-    //                 language: { type: 'string' },
-    //                 timeZone: { type: 'string' },
-    //                 screenWidth: { type: 'number' },
-    //                 javaEnabled: { type: 'boolean' },
-    //                 customerIp: { type: 'string' },
-    //                 screenHeight: { type: 'number' },
-    //                 windowHeight: { type: 'number' },
-    //                 timeZoneOffset: { type: 'number' },
-    //                 windowWidth: { type: 'number' }
-    //               }
-    //             }
-    //           }
-    //         },
-    //         orderId: { type: 'string' },
-    //         cardToken: { type: 'string' },
-    //         payment3dsType: { type: 'string' },
-    //         kycVerified: { type: 'boolean' },
-    //         previousPaymentCount: { type: 'number' },
-    //         saveCard: { type: 'boolean' },
-    //         merchantInformation: {
-    //           type: 'object',
-    //           properties: {
-    //             name: { type: 'string' },
-    //             merchantName: { type: 'string' },
-    //             country: { type: 'string' },
-    //             address1: { type: 'string' },
-    //             administrativeArea: { type: 'string' },
-    //             locality: { type: 'string' },
-    //             postalCode: { type: 'string' },
-    //             url: { type: 'string' },
-    //             customerServicePhoneNumber: { type: 'string' },
-    //             categoryCode: { type: 'string' },
-    //             noteToBuyer: { type: 'string' }
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }, 
-    async (request, reply) => {
-      // const { amount, currency, lang, hookUrl, callback, callbackFail, billing, cardData, orderId, cardToken, payment3dsType = 'Redirection', kycVerified = false, previousPaymentCount = 0, saveCard = false, merchantInformation } = request.body;
+  fastify.post('/create-transaction', async (request, reply) => {
+    try {
+      const authToken = await getAuthToken();
 
-      try {
-        const authToken = await getAuthToken();
-        
-        const options = {
-          method: 'POST',
-          headers: {
-            accept: 'application/json',
-            'content-type': 'application/json',
-            authorization: `Bearer ${authToken}`
-          },
-          body: JSON.stringify({
-            billing: {
-              firstName: 'John',
-              lastName: 'Doe',
-              address1: '123 Street',
-              city: 'Cityville',
-              state: 'State',
-              country: 'US',
-              postalCode: '12345',
-              phone: '1234567890',
-              email: 'john.doe@example.com',
-              externalUserId: 'user123'
-            },
-            amount: 1000,
-            currency: 'USD',
-            hookUrl: 'http://127.0.0.1:3000/webhook',
-            callback: 'https://saba/callback',
-            callbackFail: 'https://saba/callbackFail',
-            orderId: 'order123',
-            cardToken: 'token123',
-            lang: 'en'
-          })
-        };
+      const requestData = {
+        amount: 1000,
+        currency: "USD",
+        lang: "en",
+        hookUrl: "https://upset-spiders-start.loca.lt/webhook",
+        callback: "https://yourserver.com/callback",
+        callbackFail: "https://yourserver.com/callbackFail",
+        billing: {
+          firstName: "John",
+          lastName: "Doe",
+          address1: "123 Street",
+          city: "Cityville",
+          state: "State",
+          country: "US",
+          postalCode: "12345",
+          phone: "1234567890",
+          email: "john.doe@example.com",
+          externalUserId: "user123",
+          dateOfBirth: "1980-01-01"
+        },
+        orderId: "order123",
+        cardToken: "token123",
+        payment3dsType: "Redirection",
+        kycVerified: true,
+        previousPaymentCount: 5,
+        cardData: {
+          cardNumber: "4111111111111111",
+          cardHolderName: "John Doe",
+          cardExpiryDate: "12",
+          cardExpiryDate2: "2024",
+          cardCvv: "123",
+          browser: {
+            colorDepth: 24,
+            userAgent: "Mozilla/5.0",
+            language: "en-US",
+            timeZone: "-300",
+            screenWidth: 1920,
+            javaEnabled: true,
+            customerIp: "192.168.1.1",
+            screenHeight: 1080,
+            windowHeight: 800,
+            timeZoneOffset: -300,
+            windowWidth: 1200
+          }
+        },
+        saveCard: true,
+        merchantInformation: {
+          name: "Example Merchant",
+          merchantName: "Example Merchant 3DS",
+          country: "US",
+          address1: "123 Example St.",
+          administrativeArea: "CA",
+          locality: "Example City",
+          postalCode: "12345",
+          url: "https://example.com",
+          customerServicePhoneNumber: "123-456-7890",
+          categoryCode: "5533",
+          noteToBuyer: "Thank you for your purchase!"
+        }
+      };
 
-        fetch('https://api.omno.com/transaction/create', options)
-          .then(response => response.json())
-          .then(response => console.log(response))
-          .catch(err => console.error(err));
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`
+        },
+        body: JSON.stringify(requestData),
+      };
 
-        
-      } catch (error) {
-        fastify.log.error(error);
-        reply.status(500).send({ error: 'Transaction failed', details: error.message });
+      const response = await fetch('https://api.omno.com/transaction/h2h/create', options);
+
+      if (!response.ok) {
+        const errorText = await response.text(); // Capture error body in case of non-JSON response
+        throw new Error(`API Error: ${response.status} - ${errorText}`);
       }
-    });
+
+      const responseText = await response.text(); // Get raw response as text
+
+      // Only try to parse the response if it's not empty
+      let data;
+      if (responseText) {
+        try {
+          data = JSON.parse(responseText); // Parse only if the responseText is not empty
+        } catch (jsonError) {
+          throw new Error(`Failed to parse JSON: ${jsonError.message}`);
+        }
+      } else {
+        throw new Error('Received empty response body');
+      }
+
+      console.log("data:  ", data);
+
+      // Handle redirection for 3DS if provided in the response
+      if (data.paymentUrl) {
+        reply.redirect(data.paymentUrl);
+      } else {
+        reply.status(400).send({ error: 'Payment URL not provided in response' });
+      }
+
+    } catch (error) {
+      fastify.log.error(error);
+      reply.status(500).send({ error: 'Transaction failed', details: error.message });
+    }
+  });
 }
 
 module.exports = transactionRoutes;
