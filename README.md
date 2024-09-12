@@ -6,7 +6,7 @@ step 1: npm install -g localtunnel
 step 2: lt --port 3000
 leave it running. It should give you base url.
 
-Create .env and copy everuthing from .env.sample
+Create .env and copy everything from .env.sample
 Copy localtunnel link in .env BASE_URL
 
 Now start project using
