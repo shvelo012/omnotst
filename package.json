@@ -17,10 +17,14 @@
   "dependencies": {
     "@fastify/autoload": "^5.0.0",
     "@fastify/sensible": "^5.0.0",
+    "@fastify/view": "^9.1.0",
     "axios": "^1.7.7",
-    "fastify": "^4.26.1",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.28.1",
     "fastify-cli": "^6.3.0",
     "fastify-plugin": "^4.0.0",
-    "fastify-swagger": "^5.2.0"
+    "fastify-static": "^4.7.0",
+    "fastify-swagger": "^5.2.0",
+    "handlebars": "^4.7.8"
   }
 }

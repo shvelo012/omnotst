@@ -56,3 +56,13 @@ profile-*
 profile*
 *clinic*
 *flamegraph*
+
+# Node.js dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# IDE specific files
+.vscode/
+.idea/

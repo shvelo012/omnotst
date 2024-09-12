@@ -1,24 +1,19 @@
-# Getting Started with [Fastify-CLI](https://www.npmjs.com/package/fastify-cli)
-This project was bootstrapped with Fastify-CLI.
+Run npm install 
 
-## Available Scripts
+Install localtunnel
+Example in ubuntu terminal 
+step 1: npm install -g localtunnel
+step 2: lt --port 3000
+leave it running. It should give you base url.
 
-In the project directory, you can run:
+Create .env and copy everuthing from .env.sample
+Copy localtunnel link in .env BASE_URL
 
-### `npm run dev`
+Now start project using
+npm run dev
 
-To start the app in dev mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Copy BASE_URL in browser
+You need tunnel password. Follow the instruction click link which is shown down. Copy password which looks like ip.
+Now you can test it. There is test static data already in project. 
+I added some visualization to test it easily. You can also look for logs in terminal.
 
-### `npm start`
-
-For production mode
-
-### `npm run test`
-
-Run the test cases.
-
-## Learn More
-
-To learn Fastify, check out the [Fastify documentation](https://fastify.dev/docs/latest/).
-# omnotst

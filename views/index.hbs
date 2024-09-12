@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transaction Page</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    .button {
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: green;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: darkgreen;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to the Payment Page</h1>
+  <button class="button" onclick="createTransaction()">Create Transaction</button>
+
+  <script>
+    function createTransaction() {
+      fetch('/create-transaction', {
+        method: 'POST',
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.threeDSRedirectUrl) {
+          window.location.href = data.threeDSRedirectUrl;
+        }
+      })
+      .catch(error => {
+        console.error('Error creating transaction:', error);
+      });
+    }
+  </script>
+</body>
+</html>
